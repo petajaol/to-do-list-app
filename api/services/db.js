@@ -6,7 +6,6 @@ const database = {
   query(sql, params) {
     return db.prepare(sql).all(params);
   },
-  
   run(sql, params) {
     return db.prepare(sql).run(params);
   },

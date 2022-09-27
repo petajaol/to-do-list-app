@@ -1,16 +1,16 @@
 import "./App.css";
-import axios from "axios";
+import Button from "./components/Button";
+import Filter from "./components/Filter";
+import Input from "./components/Input";
+import List from "./components/List";
 
 function App() {
-  const get = () => {
-    axios.get(`http://localhost:3000/chores/1`).then((res) => {
-      console.log(res.data);
-    });
-  };
-
   return (
-    <div className="App">
-      <button onClick={get}>GET</button>
+    <div className="app">
+      <Input />
+      <Button />
+      <Filter />
+      <List />
     </div>
   );
 }
