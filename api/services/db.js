@@ -1,6 +1,6 @@
 const sqlite = require("better-sqlite3");
 const path = require("path");
-const db = new sqlite(path.resolve("chores.db"), { fileMustExist: true });
+const db = new sqlite(path.resolve("tasks.db"), { fileMustExist: true });
 
 const database = {
   query(sql, params) {

@@ -1,6 +1,6 @@
 const express = require("express");
 const cors = require("cors");
-const choresRouter = require("./routes/chores");
+const tasksRouter = require("./routes/tasks");
 
 const app = express();
 const port = 3000 || process.env.PORT;
@@ -8,7 +8,7 @@ const port = 3000 || process.env.PORT;
 app.use(cors());
 app.use(express.json());
 
-app.use("/chores", choresRouter);
+app.use("/tasks", tasksRouter);
 
 app.get("/", (req, res) => {
   res.json({ message: "Welcome to the root!" });

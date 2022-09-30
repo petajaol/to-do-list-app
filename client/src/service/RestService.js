@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const url = "http://localhost:3000/chores/";
+const url = "http://localhost:3000/tasks/";
 
 const restService = {
   async get(id = "") {

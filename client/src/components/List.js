@@ -3,43 +3,42 @@ import restService from "../service/RestService";
 import "./List.css";
 
 function List() {
-  const [chores, setChores] = useState([]);
+  const [undoneTasks, setUndoneTasks] = useState([]);
+  const [doneTasks, setDoneTasks] = useState([]);
 
-  //make two arrays on basis of done and undone?
-
-  //delete and update buttons and logic for singular chores
+  //delete and update buttons and logic for singular tasks
 
   useEffect(() => {
-    /* (async () => {
+    (async () => {
       const response = await restService.get();
-      setChores(response.data);
-    })(); */
-    fetchChores();
+      divideTasksToUndoneAndDone(response.data);
+    })();
   }, []);
 
-  console.log(chores);
+  const divideTasksToUndoneAndDone = (tasks) => {
+    const undoneTasks = tasks?.filter((task) => task.done === 0);
+    const doneTasks = tasks?.filter((task) => task.done === 1);
+    setUndoneTasks(undoneTasks);
+    setDoneTasks(doneTasks);
+  };
 
-  async function fetchChores() {
-    const response = await restService.get();
-    setChores(response.data); 
-  }
+  const moveTaskFromUndoneToDone = (id) => {
+    const index = undoneTasks.findIndex((task) => task.id === id);
+    if (index > -1) {
+      const undoneTasksCopy = [...undoneTasks];
+      const removedItem = undoneTasksCopy.splice(index, 1);
+      setUndoneTasks(undoneTasksCopy);
+      setDoneTasks([...doneTasks, ...removedItem]);
+    }
+  };
 
-  const updateChoreToDone = (id) => {
-    //slice from done list and add to undone list?
+  const updateTaskToDone = (id) => {
     restService.update(id, { done: 1 });
-    const updatedChores = chores.map((chore) =>
-      chore.id === id ? { ...chore, done: 1 } : chore
-    );
-    setChores(updatedChores);
+    moveTaskFromUndoneToDone(id);
   };
 
-  const returnUndoneChores = () => {
-    return chores?.filter((chore) => chore.done === 0);
-  };
-
-/*   const returnDoneChores = () => {
-    return chores?.filter((chore) => chore.done === 1);
-  }; */
+  console.log(undoneTasks);
+  console.log(doneTasks);
 
   return (
     <table>
@@ -50,16 +49,16 @@ function List() {
           <th>Created at</th>
           <th>Deadline</th>
         </tr>
-        {returnUndoneChores()?.map((chore) => (
-          <tr key={chore.id}>
-            <td>{chore.name}</td>
-            <td>{chore.type}</td>
-            <td>{chore.created_at}</td>
-            <td>{chore.deadline}</td>
+        {undoneTasks.map((task) => (
+          <tr key={task.id}>
+            <td>{task.name}</td>
+            <td>{task.type}</td>
+            <td>{task.created_at}</td>
+            <td>{task.deadline}</td>
             <td>
               <input
                 type="checkbox"
-                onChange={() => updateChoreToDone(chore.id)}
+                onChange={() => updateTaskToDone(task.id)}
               />
             </td>
           </tr>

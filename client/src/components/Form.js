@@ -23,7 +23,7 @@ function Form() {
   return (
     <form id="form" onSubmit={handleSubmit}>
       <label htmlFor="name">
-        Add a new chore:
+        Add a new task:
         <input
           type="text"
           id="name"

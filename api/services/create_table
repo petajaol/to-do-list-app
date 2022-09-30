@@ -1,1 +1,1 @@
- create table chores (id integer primary key autoincrement not null, name text not null, type text not null, deadline date, created_at date default current_timestamp not null, done boolean not null default 0);
+ create table tasks (id integer primary key autoincrement not null, name text not null, type text not null, deadline date, created_at date default current_timestamp not null, done boolean not null default 0);
