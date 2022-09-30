@@ -5,16 +5,27 @@ import "./List.css";
 function List() {
   const [chores, setChores] = useState([]);
 
+  //make two arrays on basis of done and undone?
+
+  //delete and update buttons and logic for singular chores
+
   useEffect(() => {
-    (async () => {
+    /* (async () => {
       const response = await restService.get();
       setChores(response.data);
-    })();
+    })(); */
+    fetchChores();
   }, []);
 
   console.log(chores);
 
+  async function fetchChores() {
+    const response = await restService.get();
+    setChores(response.data); 
+  }
+
   const updateChoreToDone = (id) => {
+    //slice from done list and add to undone list?
     restService.update(id, { done: 1 });
     const updatedChores = chores.map((chore) =>
       chore.id === id ? { ...chore, done: 1 } : chore

@@ -10,9 +10,7 @@ function Form() {
 
   const handleSubmit = () => {
     restService.post(formFields);
-    //ilman
-    //event.preventDefault();
-    //refreshaa koko komponenttipuun, miten saisi pelkän List-komponentin?
+    //how to refresh only the List-component instead of whole component tree (without event.preventDefault())?
   };
 
   const handleDate = (date) => {
