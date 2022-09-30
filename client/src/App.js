@@ -1,14 +1,13 @@
 import "./App.css";
-import Button from "./components/Button";
 import Filter from "./components/Filter";
-import Input from "./components/Input";
 import List from "./components/List";
+import Form from "./components/Form";
 
 function App() {
+  console.log("asdasd")
   return (
     <div className="app">
-      <Input />
-      <Button />
+      <Form />
       <Filter />
       <List />
     </div>

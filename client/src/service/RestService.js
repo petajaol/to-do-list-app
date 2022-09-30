@@ -1,26 +1,23 @@
 import axios from "axios";
 
 const url = "http://localhost:3000/chores/";
+
 const restService = {
-  get(id = "") {
-    axios.get(url+id).then((res) => {
-      console.log(res.data);
-    });
+  async get(id = "") {
+    const response = await axios.get(url + id);
+    return response;
   },
-  post(body) {
-    axios.post(url, body).then((res) => {
-      console.log(res.data);
-    });
+  async post(body) {
+    const response = await axios.post(url, body);
+    return response;
   },
-  update(id, body) {
-    axios.patch(url+id, body).then((res) => {
-      console.log(res.data);
-    });
+  async update(id, body) {
+    const response = await axios.patch(url + id, body);
+    return response;
   },
-  delete(id) {
-    axios.delete(url+id).then((res) => {
-      console.log(res.data);
-    });
+  async delete(id) {
+    const response = await axios.delete(url + id);
+    return response;
   },
 };
 

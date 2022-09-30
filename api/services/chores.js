@@ -15,8 +15,8 @@ const choresService = {
   },
   update(id, chore) {
     return database.run(
-      "UPDATE chores SET name=COALESCE(?, name), type=COALESCE(?, type), deadline=COALESCE(?, deadline) WHERE id=?",
-      [chore.name, chore.type, chore.deadline, id]
+      "UPDATE chores SET name=COALESCE(?, name), type=COALESCE(?, type), deadline=COALESCE(?, deadline), done=COALESCE(?, done) WHERE id=?",
+      [chore.name, chore.type, chore.deadline, chore.done, id]
     );
   },
   delete(id) {
