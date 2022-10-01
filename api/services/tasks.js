@@ -14,10 +14,11 @@ const tasksService = {
     );
   },
   update(id, task) {
-    return database.run(
+    database.run(
       "UPDATE tasks SET name=COALESCE(?, name), type=COALESCE(?, type), deadline=COALESCE(?, deadline), done=COALESCE(?, done) WHERE id=?",
       [task.name, task.type, task.deadline, task.done, id]
     );
+    return { id: parseInt(id), ...task };
   },
   delete(id) {
     return database.run("DELETE FROM tasks WHERE id=?", [id]);

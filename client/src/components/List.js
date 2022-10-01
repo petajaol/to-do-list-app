@@ -3,68 +3,73 @@ import restService from "../service/RestService";
 import "./List.css";
 
 function List() {
-  const [undoneTasks, setUndoneTasks] = useState([]);
-  const [doneTasks, setDoneTasks] = useState([]);
+  const [tasks, setTasks] = useState([]);
 
+  console.log(tasks);
   //delete and update buttons and logic for singular tasks
 
   useEffect(() => {
     (async () => {
       const response = await restService.get();
-      divideTasksToUndoneAndDone(response.data);
+      setTasks(response.data);
     })();
   }, []);
 
-  const divideTasksToUndoneAndDone = (tasks) => {
-    const undoneTasks = tasks?.filter((task) => task.done === 0);
-    const doneTasks = tasks?.filter((task) => task.done === 1);
-    setUndoneTasks(undoneTasks);
-    setDoneTasks(doneTasks);
+  const setUpdatedTask = (updatedTask) => {
+    const updatedTasks = tasks.map((task) =>
+      task.id === updatedTask.id ? { ...task, ...updatedTask } : task
+    );
+    setTasks(updatedTasks);
   };
 
-  const moveTaskFromUndoneToDone = (id) => {
-    const index = undoneTasks.findIndex((task) => task.id === id);
-    if (index > -1) {
-      const undoneTasksCopy = [...undoneTasks];
-      const removedItem = undoneTasksCopy.splice(index, 1);
-      setUndoneTasks(undoneTasksCopy);
-      setDoneTasks([...doneTasks, ...removedItem]);
-    }
+  const handleTaskDone = (id) => {
+    (async () => {
+      const response = await restService.update(id, { done: 1 });
+      setUpdatedTask(response.data);
+    })();
   };
 
-  const updateTaskToDone = (id) => {
-    restService.update(id, { done: 1 });
-    moveTaskFromUndoneToDone(id);
+  const returnUndoneTasks = () => {
+    return tasks.filter((task) => task.done === 0);
   };
 
-  console.log(undoneTasks);
-  console.log(doneTasks);
+  const returnDoneTasks = () => {
+    return tasks.filter((task) => task.done === 1);
+  };
 
   return (
-    <table>
-      <tbody>
-        <tr>
-          <th>Name</th>
-          <th>Type</th>
-          <th>Created at</th>
-          <th>Deadline</th>
-        </tr>
-        {undoneTasks.map((task) => (
-          <tr key={task.id}>
-            <td>{task.name}</td>
-            <td>{task.type}</td>
-            <td>{task.created_at}</td>
-            <td>{task.deadline}</td>
-            <td>
-              <input
-                type="checkbox"
-                onChange={() => updateTaskToDone(task.id)}
-              />
-            </td>
+    <div>
+      <table>
+        <tbody>
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Created at</th>
+            <th>Deadline</th>
           </tr>
+          {returnUndoneTasks().map((task) => (
+            <tr key={task.id}>
+              <td>{task.name}</td>
+              <td>{task.type}</td>
+              <td>{task.created_at}</td>
+              <td>{task.deadline}</td>
+              <td>
+                <input
+                  type="checkbox"
+                  onChange={() => handleTaskDone(task.id)}
+                />
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <h3>Done tasks</h3>
+      <ul>
+        {returnDoneTasks().map((task) => (
+          <li key={task.id}>{task.name}</li>
         ))}
-      </tbody>
-    </table>
+      </ul>
+    </div>
   );
 }
 
