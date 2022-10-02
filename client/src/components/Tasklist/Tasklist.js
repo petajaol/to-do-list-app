@@ -1,11 +1,9 @@
 import { useState, useEffect } from "react";
-import restService from "../../service/RestService";
+import restService from "../../services/RestService";
 import "./Tasklist.css";
 
-function Tasklist() {
+function Tasklist({ newTask }) {
   const [tasks, setTasks] = useState([]);
-
-  console.log(tasks);
 
   //delete and update buttons and logic for singular tasks
 
@@ -16,9 +14,9 @@ function Tasklist() {
     })();
   }, []);
 
-  /*  useEffect(() => {
-    setTasks([...tasks, props.newTask]);
-  }, [props.newTask]); */
+  useEffect(() => {
+    setTasks([...tasks, newTask]);
+  }, [newTask]);
 
   const setUpdatedTask = (updatedTask) => {
     const updatedTasks = tasks.map((task) =>

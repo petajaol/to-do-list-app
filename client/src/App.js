@@ -1,14 +1,15 @@
 import "./App.css";
-import Filter from "./components/Filter/Filter";
-import List from "./components/Tasklist/Tasklist";
+import Tasklist from "./components/Tasklist/Tasklist";
 import Form from "./components/Form/Form";
+import { useState } from "react";
 
 function App() {
+  const [postResponse, setPostResponse] = useState({});
+
   return (
     <div className="app">
-      <Form />
-      <Filter />
-      <List />
+      <Form setPostResponse={setPostResponse}/>
+      <Tasklist newTask={postResponse} />
     </div>
   );
 }

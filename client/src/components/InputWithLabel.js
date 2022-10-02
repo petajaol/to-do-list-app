@@ -1,4 +1,5 @@
 function InputWithLabel(props) {
+  //radio group map?
   return (
     <label htmlFor={props.id}>
       {props.label}

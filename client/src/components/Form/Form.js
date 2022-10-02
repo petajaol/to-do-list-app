@@ -1,24 +1,32 @@
 import { useState } from "react";
-import restService from "../../service/RestService";
+import restService from "../../services/RestService";
 import "./Form.css";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "../InputWithLabel";
 import InputWithLabel from "../InputWithLabel";
 
-function Form() {
-  const [formFields, setFormFields] = useState({
+function Form({ setPostResponse }) {
+  const emptyForm = {
     name: "",
     type: "",
     deadline: "",
-  });
+  };
+
+  const [formInputs, setFormInputs] = useState(emptyForm);
   const [date, setDate] = useState(new Date());
 
-  const handleSubmit = () => {
+  const clearFormInputs = () => {
+    setFormInputs(emptyForm);
+  };
+
+  const handleSubmit = (event) => {
     (async () => {
-      const response = await restService.post(formFields);
+      const response = await restService.post(formInputs);
+      setPostResponse(response.data);
+      clearFormInputs();
     })();
-    //how to refresh only the List-component instead of whole component tree (without event.preventDefault())?
+    event.preventDefault();
   };
 
   return (
@@ -28,9 +36,9 @@ function Form() {
         type="text"
         id="name"
         name="name"
-        value={formFields.name}
+        value={formInputs.name}
         onChange={(event) =>
-          setFormFields({ ...formFields, name: event.target.value })
+          setFormInputs({ ...formInputs, name: event.target.value })
         }
       />
       <InputWithLabel
@@ -40,7 +48,7 @@ function Form() {
         name="type"
         value="home"
         onChange={(event) =>
-          setFormFields({ ...formFields, type: event.target.value })
+          setFormInputs({ ...formInputs, type: event.target.value })
         }
       />
       <InputWithLabel
@@ -50,7 +58,7 @@ function Form() {
         name="type"
         value="school"
         onChange={(event) =>
-          setFormFields({ ...formFields, type: event.target.value })
+          setFormInputs({ ...formInputs, type: event.target.value })
         }
       />
       <InputWithLabel
@@ -60,14 +68,14 @@ function Form() {
         name="type"
         value="work"
         onChange={(event) =>
-          setFormFields({ ...formFields, type: event.target.value })
+          setFormInputs({ ...formInputs, type: event.target.value })
         }
       />
       <DatePicker
         selected={date}
         onChange={(date) => {
           setDate(date);
-          setFormFields({ ...formFields, deadline: date });
+          setFormInputs({ ...formInputs, deadline: date });
         }}
         dateFormat="dd/MM/yyyy"
       />
