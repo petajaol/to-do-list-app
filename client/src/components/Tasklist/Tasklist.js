@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import restService from "../service/RestService";
-import "./List.css";
+import restService from "../../service/RestService";
+import "./Tasklist.css";
 
-function List() {
+function Tasklist() {
   const [tasks, setTasks] = useState([]);
 
   console.log(tasks);
@@ -78,4 +78,4 @@ function List() {
   );
 }
 
-export default List;
+export default Tasklist;

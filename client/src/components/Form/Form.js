@@ -1,10 +1,10 @@
 import { useState } from "react";
-import restService from "../service/RestService";
+import restService from "../../service/RestService";
 import "./Form.css";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import "./InputWithLabel";
-import InputWithLabel from "./InputWithLabel";
+import "../InputWithLabel";
+import InputWithLabel from "../InputWithLabel";
 
 function Form() {
   const [formFields, setFormFields] = useState({
