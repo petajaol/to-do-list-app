@@ -22,7 +22,6 @@ router.get("/:id?", function (req, res, next) {
 
 router.post("/", function (req, res, next) {
   try {
-    console.log(tasksService.create(req.body));
     res.json(tasksService.create(req.body));
   } catch (err) {
     console.error(`Error while adding tasks `, err.message);

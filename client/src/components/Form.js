@@ -3,7 +3,6 @@ import restService from "../service/RestService";
 import "./Form.css";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import List from "./List";
 
 function Form() {
   const [formFields, setFormFields] = useState({
@@ -12,15 +11,11 @@ function Form() {
     deadline: "",
   });
   const [date, setDate] = useState(new Date());
-  const [postResponse, setPostResponse] = useState({});
 
-  const handleSubmit = (event) => {
+  const handleSubmit = () => {
     (async () => {
       const response = await restService.post(formFields);
-      setPostResponse(response);
     })();
-    event.preventDefault();
-
     //how to refresh only the List-component instead of whole component tree (without event.preventDefault())?
   };
 
@@ -85,7 +80,6 @@ function Form() {
         dateFormat="dd/MM/yyyy"
       />
       <input type="submit" id="submit" value="Add" />
-      <List newTask={postResponse} />
     </form>
   );
 }

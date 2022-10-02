@@ -8,7 +8,7 @@ function App() {
     <div className="app">
       <Form />
       <Filter />
-      
+      <List />
     </div>
   );
 }

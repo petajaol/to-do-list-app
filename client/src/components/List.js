@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import restService from "../service/RestService";
 import "./List.css";
 
-function List(props) {
+function List() {
   const [tasks, setTasks] = useState([]);
 
   console.log(tasks);
@@ -16,13 +16,13 @@ function List(props) {
     })();
   }, []);
 
-/*   useEffect(() => {
-    setTasks([...tasks], props.newTask);
+  /*  useEffect(() => {
+    setTasks([...tasks, props.newTask]);
   }, [props.newTask]); */
 
   const setUpdatedTask = (updatedTask) => {
     const updatedTasks = tasks.map((task) =>
-      task.id === updatedTask.id ? { ...task, ...updatedTask } : task
+      task.id === updatedTask.id ? { ...updatedTask } : task
     );
     setTasks(updatedTasks);
   };
@@ -30,16 +30,15 @@ function List(props) {
   const handleTaskDone = (id) => {
     (async () => {
       const response = await restService.update(id, { done: 1 });
-      console.log(response);
       setUpdatedTask(response.data);
     })();
   };
 
-  const returnUndoneTasks = () => {
+  const undoneTasks = () => {
     return tasks.filter((task) => task.done === 0);
   };
 
-  const returnDoneTasks = () => {
+  const doneTasks = () => {
     return tasks.filter((task) => task.done === 1);
   };
 
@@ -53,7 +52,7 @@ function List(props) {
             <th>Created at</th>
             <th>Deadline</th>
           </tr>
-          {returnUndoneTasks().map((task) => (
+          {undoneTasks().map((task) => (
             <tr key={task.id}>
               <td>{task.name}</td>
               <td>{task.type}</td>
@@ -71,7 +70,7 @@ function List(props) {
       </table>
       <h3>Done tasks</h3>
       <ul>
-        {returnDoneTasks().map((task) => (
+        {doneTasks().map((task) => (
           <li key={task.id}>{task.name}</li>
         ))}
       </ul>
