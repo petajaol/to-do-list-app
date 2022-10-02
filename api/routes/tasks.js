@@ -5,7 +5,7 @@ const tasksService = require("../services/tasks");
 router.get("/:id?", function (req, res, next) {
   if (req.params.id) {
     try {
-      res.json(tasksService.getOne(req.params.id)[0]);
+      res.json(tasksService.getOne(req.params.id));
     } catch (err) {
       console.error(`Error while getting tasks `, err.message);
       next(err);
@@ -22,6 +22,7 @@ router.get("/:id?", function (req, res, next) {
 
 router.post("/", function (req, res, next) {
   try {
+    console.log(tasksService.create(req.body));
     res.json(tasksService.create(req.body));
   } catch (err) {
     console.error(`Error while adding tasks `, err.message);

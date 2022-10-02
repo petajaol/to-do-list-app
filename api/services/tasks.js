@@ -2,23 +2,30 @@ const database = require("./db");
 
 const tasksService = {
   getAll() {
-    return database.query(`SELECT * FROM tasks`, []);
+    return database.queryAll(`SELECT * FROM tasks`, []);
   },
   getOne(id) {
-    return database.query(`SELECT * FROM tasks WHERE id=?`, [id]);
+    return database.queryOne(`SELECT * FROM tasks WHERE id=?`, [id]);
   },
   create(task) {
-    return database.run(
-      "INSERT INTO tasks (name, type, deadline) VALUES (?, ?, ?)",
-      [task.name, task.type, task.deadline]
+    // RETURNING * ???
+    database.run("INSERT INTO tasks (name, type, deadline) VALUES (?, ?, ?)", [
+      task.name,
+      task.type,
+      task.deadline,
+    ]);
+    return database.queryOne(
+      "SELECT * FROM tasks WHERE id=last_insert_rowid()",
+      []
     );
   },
   update(id, task) {
+    // RETURNING * ???
     database.run(
       "UPDATE tasks SET name=COALESCE(?, name), type=COALESCE(?, type), deadline=COALESCE(?, deadline), done=COALESCE(?, done) WHERE id=?",
       [task.name, task.type, task.deadline, task.done, id]
     );
-    return { id: parseInt(id), ...task };
+    return database.queryOne("SELECT * FROM tasks WHERE id=?", [id]);
   },
   delete(id) {
     return database.run("DELETE FROM tasks WHERE id=?", [id]);

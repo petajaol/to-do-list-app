@@ -3,13 +3,24 @@ import restService from "../service/RestService";
 import "./Form.css";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import List from "./List";
 
 function Form() {
-  const [formFields, setFormFields] = useState({ name: "", type: "", deadline: "" });
+  const [formFields, setFormFields] = useState({
+    name: "",
+    type: "",
+    deadline: "",
+  });
   const [date, setDate] = useState(new Date());
+  const [postResponse, setPostResponse] = useState({});
 
-  const handleSubmit = () => {
-    restService.post(formFields);
+  const handleSubmit = (event) => {
+    (async () => {
+      const response = await restService.post(formFields);
+      setPostResponse(response);
+    })();
+    event.preventDefault();
+
     //how to refresh only the List-component instead of whole component tree (without event.preventDefault())?
   };
 
@@ -17,8 +28,6 @@ function Form() {
     setDate(date);
     setFormFields({ ...formFields, deadline: date });
   };
-
-  console.log(formFields);
 
   return (
     <form id="form" onSubmit={handleSubmit}>
@@ -29,7 +38,9 @@ function Form() {
           id="name"
           name="name"
           value={formFields.name}
-          onChange={(event) => setFormFields({ ...formFields, name: event.target.value })}
+          onChange={(event) =>
+            setFormFields({ ...formFields, name: event.target.value })
+          }
         />
       </label>
       <label htmlFor="home">
@@ -39,7 +50,9 @@ function Form() {
           id="home"
           name="type"
           value="home"
-          onChange={(event) => setFormFields({ ...formFields, type: event.target.value })}
+          onChange={(event) =>
+            setFormFields({ ...formFields, type: event.target.value })
+          }
         />
       </label>
       <label htmlFor="school">
@@ -49,7 +62,9 @@ function Form() {
           id="school"
           name="type"
           value="school"
-          onChange={(event) => setFormFields({ ...formFields, type: event.target.value })}
+          onChange={(event) =>
+            setFormFields({ ...formFields, type: event.target.value })
+          }
         />
       </label>
       <label htmlFor="work">
@@ -59,11 +74,18 @@ function Form() {
           id="work"
           name="type"
           value="work"
-          onChange={(event) => setFormFields({ ...formFields, type: event.target.value })}
+          onChange={(event) =>
+            setFormFields({ ...formFields, type: event.target.value })
+          }
         />
       </label>
-      <DatePicker selected={date} onChange={(date) => handleDate(date)} dateFormat="dd/MM/yyyy" />
+      <DatePicker
+        selected={date}
+        onChange={(date) => handleDate(date)}
+        dateFormat="dd/MM/yyyy"
+      />
       <input type="submit" id="submit" value="Add" />
+      <List newTask={postResponse} />
     </form>
   );
 }

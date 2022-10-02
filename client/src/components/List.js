@@ -2,10 +2,11 @@ import { useState, useEffect } from "react";
 import restService from "../service/RestService";
 import "./List.css";
 
-function List() {
+function List(props) {
   const [tasks, setTasks] = useState([]);
 
   console.log(tasks);
+
   //delete and update buttons and logic for singular tasks
 
   useEffect(() => {
@@ -14,6 +15,10 @@ function List() {
       setTasks(response.data);
     })();
   }, []);
+
+/*   useEffect(() => {
+    setTasks([...tasks], props.newTask);
+  }, [props.newTask]); */
 
   const setUpdatedTask = (updatedTask) => {
     const updatedTasks = tasks.map((task) =>
@@ -25,6 +30,7 @@ function List() {
   const handleTaskDone = (id) => {
     (async () => {
       const response = await restService.update(id, { done: 1 });
+      console.log(response);
       setUpdatedTask(response.data);
     })();
   };

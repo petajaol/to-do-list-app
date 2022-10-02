@@ -3,7 +3,10 @@ const path = require("path");
 const db = new sqlite(path.resolve("tasks.db"), { fileMustExist: true });
 
 const database = {
-  query(sql, params) {
+  queryOne(sql, params) {
+    return db.prepare(sql).get(params);
+  },
+  queryAll(sql, params) {
     return db.prepare(sql).all(params);
   },
   run(sql, params) {
