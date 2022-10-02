@@ -18,25 +18,25 @@ function Tasklist({ newTask }) {
     setTasks([...tasks, newTask]);
   }, [newTask]);
 
-  const setUpdatedTask = (updatedTask) => {
-    const updatedTasks = tasks.map((task) =>
+  const returnUpdatedTasks = (updatedTask) => {
+    return tasks.map((task) =>
       task.id === updatedTask.id ? { ...updatedTask } : task
     );
-    setTasks(updatedTasks);
   };
 
   const handleTaskDone = (id) => {
     (async () => {
       const response = await restService.update(id, { done: 1 });
-      setUpdatedTask(response.data);
+      const updatedTasks = returnUpdatedTasks(response.data);
+      setTasks(updatedTasks);
     })();
   };
 
-  const undoneTasks = () => {
+  const returnUndoneTasks = () => {
     return tasks.filter((task) => task.done === 0);
   };
 
-  const doneTasks = () => {
+  const returnDoneTasks = () => {
     return tasks.filter((task) => task.done === 1);
   };
 
@@ -50,7 +50,7 @@ function Tasklist({ newTask }) {
             <th>Created at</th>
             <th>Deadline</th>
           </tr>
-          {undoneTasks().map((task) => (
+          {returnUndoneTasks().map((task) => (
             <tr key={task.id}>
               <td>{task.name}</td>
               <td>{task.type}</td>
@@ -68,7 +68,7 @@ function Tasklist({ newTask }) {
       </table>
       <h3>Done tasks</h3>
       <ul>
-        {doneTasks().map((task) => (
+        {returnDoneTasks().map((task) => (
           <li key={task.id}>{task.name}</li>
         ))}
       </ul>
