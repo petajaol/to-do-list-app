@@ -29,7 +29,8 @@ const tasksService = {
     return this.getOne(id);
   },
   delete(id) {
-    return database.run("DELETE FROM tasks WHERE id=?", [id]);
+    database.run("DELETE FROM tasks WHERE id=?", [id]);
+    return this.getAll();
   },
 };
 

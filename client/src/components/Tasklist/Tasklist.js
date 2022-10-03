@@ -16,6 +16,7 @@ function Tasklist({ newTask }) {
 
   useEffect(() => {
     setTasks([...tasks, newTask]);
+    // eslint-disable-next-line
   }, [newTask]);
 
   const returnUpdatedTasks = (updatedTask) => {
@@ -29,6 +30,13 @@ function Tasklist({ newTask }) {
       const response = await restService.update(id, { done: 1 });
       const updatedTasks = returnUpdatedTasks(response.data);
       setTasks(updatedTasks);
+    })();
+  };
+
+  const handleTaskDeleted = (id) => {
+    (async () => {
+      const response = await restService.delete(id);
+      setTasks(response.data);
     })();
   };
 
@@ -61,6 +69,11 @@ function Tasklist({ newTask }) {
                   type="checkbox"
                   onChange={() => handleTaskDone(task.id)}
                 />
+              </td>
+              <td>
+                <button type="button" onClick={() => handleTaskDeleted(task.id)}>
+                  Delete
+                </button>
               </td>
             </tr>
           ))}
