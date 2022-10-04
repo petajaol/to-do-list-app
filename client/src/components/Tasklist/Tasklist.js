@@ -19,32 +19,44 @@ function Tasklist({ newTask }) {
     // eslint-disable-next-line
   }, [newTask]);
 
-  const returnUpdatedTasks = (updatedTask) => {
+  const applyUpdateToTasks = (updatedTask) => {
     return tasks.map((task) =>
       task.id === updatedTask.id ? { ...updatedTask } : task
     );
   };
 
+  const deleteFromTasks = (id) => {
+    const index = tasks.findIndex((task) => task.id === id);
+    const tasksCopy = [...tasks];
+    tasksCopy.splice(index, 1);
+    return tasksCopy;
+  };
+
   const handleTaskDone = (id) => {
     (async () => {
       const response = await restService.update(id, { done: 1 });
-      const updatedTasks = returnUpdatedTasks(response.data);
-      setTasks(updatedTasks);
+      if (response.status === 200) {
+        const tasksWithUpdate = applyUpdateToTasks(response.data);
+        setTasks(tasksWithUpdate);
+      }
     })();
   };
 
   const handleTaskDeleted = (id) => {
     (async () => {
       const response = await restService.delete(id);
-      setTasks(response.data);
+      if (response.status === 200) {
+        const tasksAfterDelete = deleteFromTasks(id);
+        setTasks(tasksAfterDelete);
+      }
     })();
   };
 
-  const returnUndoneTasks = () => {
+  const filterUndoneTasks = () => {
     return tasks.filter((task) => task.done === 0);
   };
 
-  const returnDoneTasks = () => {
+  const filterDoneTasks = () => {
     return tasks.filter((task) => task.done === 1);
   };
 
@@ -58,7 +70,7 @@ function Tasklist({ newTask }) {
             <th>Created at</th>
             <th>Deadline</th>
           </tr>
-          {returnUndoneTasks().map((task) => (
+          {filterUndoneTasks().map((task) => (
             <tr key={task.id}>
               <td>{task.name}</td>
               <td>{task.type}</td>
@@ -71,7 +83,10 @@ function Tasklist({ newTask }) {
                 />
               </td>
               <td>
-                <button type="button" onClick={() => handleTaskDeleted(task.id)}>
+                <button
+                  type="button"
+                  onClick={() => handleTaskDeleted(task.id)}
+                >
                   Delete
                 </button>
               </td>
@@ -81,7 +96,7 @@ function Tasklist({ newTask }) {
       </table>
       <h3>Done tasks</h3>
       <ul>
-        {returnDoneTasks().map((task) => (
+        {filterDoneTasks().map((task) => (
           <li key={task.id}>{task.name}</li>
         ))}
       </ul>
