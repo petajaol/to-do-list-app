@@ -4,7 +4,8 @@ import "./Form.css";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "../InputWithLabel";
-import InputWithLabel from "../InputWithLabel";
+import TextInputWithLabel from "../InputWithLabel";
+import RadioGroup from "../RadioGroup";
 
 function Form({ setPostResponse }) {
   const emptyForm = {
@@ -31,9 +32,8 @@ function Form({ setPostResponse }) {
 
   return (
     <form id="form" onSubmit={handleSubmit}>
-      <InputWithLabel
+      <TextInputWithLabel
         label="Add a new task:"
-        type="text"
         id="name"
         name="name"
         value={formInputs.name}
@@ -41,32 +41,12 @@ function Form({ setPostResponse }) {
           setFormInputs({ ...formInputs, name: event.target.value })
         }
       />
-      <InputWithLabel
-        label="Home"
-        type="radio"
-        id="home"
-        name="type"
-        value="home"
-        onChange={(event) =>
-          setFormInputs({ ...formInputs, type: event.target.value })
-        }
-      />
-      <InputWithLabel
-        label="School"
-        type="radio"
-        id="school"
-        name="type"
-        value="school"
-        onChange={(event) =>
-          setFormInputs({ ...formInputs, type: event.target.value })
-        }
-      />
-      <InputWithLabel
-        label="Work"
-        type="radio"
-        id="work"
-        name="type"
-        value="work"
+      <RadioGroup
+        radioAttributes={[
+          { label: "Home", value: "home" },
+          { label: "School", value: "school" },
+          { label: "Work", value: "work" },
+        ]}
         onChange={(event) =>
           setFormInputs({ ...formInputs, type: event.target.value })
         }

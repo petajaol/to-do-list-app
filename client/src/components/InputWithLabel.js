@@ -1,17 +1,16 @@
-function InputWithLabel(props) {
-  //radio group map?
+function TextInputWithLabel({ id, label, name, value, onChange }) {
   return (
     <div>
-      <label htmlFor={props.id}>{props.label}</label>
+      <label htmlFor={id}>{label}</label>
       <input
-        type={props.type}
-        id={props.id}
-        name={props.name}
-        value={props.value}
-        onChange={props.onChange}
+        type="text"
+        id={id}
+        name={name}
+        value={value}
+        onChange={onChange}
       />
     </div>
   );
 }
 
-export default InputWithLabel;
+export default TextInputWithLabel;

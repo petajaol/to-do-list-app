@@ -26,11 +26,10 @@ function Tasklist({ newTask }) {
   };
 
   const deleteFromTasks = (id) => {
-    const index = tasks.findIndex((task) => task.id === id);
-    const tasksCopy = [...tasks];
-    tasksCopy.splice(index, 1);
-    return tasksCopy;
+    return tasks.filter((task) => task.id !== id);
   };
+
+  const handleUpdateTask = (id, task) => {};
 
   const handleTaskDone = (id) => {
     (async () => {
@@ -61,7 +60,7 @@ function Tasklist({ newTask }) {
   };
 
   return (
-    <div>
+    <div id="container">
       <table>
         <tbody>
           <tr>
