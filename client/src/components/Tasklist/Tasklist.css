@@ -1,4 +1,8 @@
-table, th, td {
-  border: 1px solid black;
-  border-spacing: 5px;
+#container {
+  margin: 20px;
+}
+
+th, td {
+  border: 0.1px solid black;
+  padding: 5px;
 }

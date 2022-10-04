@@ -71,6 +71,7 @@ function Form({ setPostResponse }) {
           setFormInputs({ ...formInputs, type: event.target.value })
         }
       />
+      <label>Deadline</label>
       <DatePicker
         selected={date}
         onChange={(date) => {

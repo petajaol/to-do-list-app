@@ -14,12 +14,11 @@ const tasksService = {
     );
   },
   create(task) {
-    database.run("INSERT INTO tasks (name, type, deadline) VALUES (?, ?, ?)", [
-      task.name,
-      task.type,
-      task.deadline,
-    ]);
-    return this.getLastInserted();
+    const insertInfo = database.run(
+      "INSERT INTO tasks (name, type, deadline) VALUES (?, ?, ?)",
+      [task.name, task.type, task.deadline]
+    );
+    return this.getOne(insertInfo.lastInsertRowid);
   },
   update(id, task) {
     database.run(
@@ -29,8 +28,7 @@ const tasksService = {
     return this.getOne(id);
   },
   delete(id) {
-    database.run("DELETE FROM tasks WHERE id=?", [id]);
-    return this.getAll();
+    return database.run("DELETE FROM tasks WHERE id=?", [id]);
   },
 };
 

@@ -1,4 +1,13 @@
 #form {
-  display: flex;
-  flex-direction: column;
+  margin: 20px;
+}
+
+#name {
+  display: block;
+  margin-bottom: 20px;
+}
+
+label {
+  display: inline-block;
+  margin-bottom: 5px;
 }

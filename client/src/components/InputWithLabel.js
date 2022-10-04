@@ -1,8 +1,8 @@
 function InputWithLabel(props) {
   //radio group map?
   return (
-    <label htmlFor={props.id}>
-      {props.label}
+    <div>
+      <label htmlFor={props.id}>{props.label}</label>
       <input
         type={props.type}
         id={props.id}
@@ -10,7 +10,7 @@ function InputWithLabel(props) {
         value={props.value}
         onChange={props.onChange}
       />
-    </label>
+    </div>
   );
 }
 
