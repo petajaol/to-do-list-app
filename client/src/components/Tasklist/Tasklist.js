@@ -29,7 +29,7 @@ function Tasklist({ newTask }) {
     return tasks.filter((task) => task.id !== id);
   };
 
-  const handleUpdateTask = (id, task) => {};
+  const handleUpdateTask = (task) => {};
 
   const handleTaskDone = (id) => {
     (async () => {

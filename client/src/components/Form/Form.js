@@ -3,8 +3,7 @@ import restService from "../../services/RestService";
 import "./Form.css";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import "../InputWithLabel";
-import TextInputWithLabel from "../InputWithLabel";
+import TextInputWithLabel from "../TextInputWithLabel";
 import RadioGroup from "../RadioGroup";
 
 function Form({ setPostResponse }) {
@@ -33,6 +32,7 @@ function Form({ setPostResponse }) {
   return (
     <form id="form" onSubmit={handleSubmit}>
       <TextInputWithLabel
+        className="new-task-input"
         label="Add a new task:"
         id="name"
         name="name"
@@ -42,6 +42,8 @@ function Form({ setPostResponse }) {
         }
       />
       <RadioGroup
+        label="Select task type: "
+        className="radio-group"
         radioAttributes={[
           { label: "Home", value: "home" },
           { label: "School", value: "school" },
@@ -51,15 +53,17 @@ function Form({ setPostResponse }) {
           setFormInputs({ ...formInputs, type: event.target.value })
         }
       />
-      <label>Deadline</label>
-      <DatePicker
-        selected={date}
-        onChange={(date) => {
-          setDate(date);
-          setFormInputs({ ...formInputs, deadline: date });
-        }}
-        dateFormat="dd/MM/yyyy"
-      />
+      <div>
+        <label>Deadline</label>
+        <DatePicker
+          selected={date}
+          onChange={(date) => {
+            setDate(date);
+            setFormInputs({ ...formInputs, deadline: date });
+          }}
+          dateFormat="dd/MM/yyyy"
+        />
+      </div>
       <input type="submit" id="submit" value="Add" />
     </form>
   );

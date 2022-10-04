@@ -1,6 +1,7 @@
-function RadioGroup({ radioAttributes, onChange }) {
+function RadioGroup({ className, label, radioAttributes, onChange }) {
   return (
-    <div>
+    <div className={className}>
+      <label>{label}</label>
       {radioAttributes.map((radio) => (
         <div>
           <label htmlFor={radio.value}>{radio.label}</label>
