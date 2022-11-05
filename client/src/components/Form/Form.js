@@ -1,10 +1,9 @@
 import { useState } from "react";
 import restService from "../../services/RestService";
 import "./Form.css";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
 import TextInputWithLabel from "../TextInputWithLabel";
 import RadioGroup from "../RadioGroup";
+import DatePickerWithLabel from "./DatePickerWithLabel";
 
 function Form({ setPostResponse }) {
   const emptyForm = {
@@ -14,7 +13,6 @@ function Form({ setPostResponse }) {
   };
 
   const [formInputs, setFormInputs] = useState(emptyForm);
-  const [date, setDate] = useState(new Date());
 
   const clearFormInputs = () => {
     setFormInputs(emptyForm);
@@ -53,17 +51,12 @@ function Form({ setPostResponse }) {
           setFormInputs({ ...formInputs, type: event.target.value })
         }
       />
-      <div>
-        <label>Deadline</label>
-        <DatePicker
-          selected={date}
-          onChange={(date) => {
-            setDate(date);
-            setFormInputs({ ...formInputs, deadline: date });
-          }}
-          dateFormat="dd/MM/yyyy"
-        />
-      </div>
+      <DatePickerWithLabel
+        className={"deadline"}
+        label={"Deadline"}
+        setFormInputs={setFormInputs}
+        form={formInputs}
+      />
       <input type="submit" id="submit" value="Add" />
     </form>
   );

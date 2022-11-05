@@ -1,5 +1,5 @@
 import "./App.css";
-import Tasklist from "./components/Tasklist/Tasklist";
+import Tasks from "./components/Tasks/Tasks";
 import Form from "./components/Form/Form";
 import { useState } from "react";
 
@@ -9,7 +9,7 @@ function App() {
   return (
     <div className="app">
       <Form setPostResponse={setPostResponse}/>
-      <Tasklist newTask={postResponse} />
+      <Tasks newTask={postResponse} />
     </div>
   );
 }

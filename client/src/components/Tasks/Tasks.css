@@ -1,0 +1,23 @@
+table {
+  border-collapse: collapse;
+  border-radius: 20px;
+  border-style: hidden;
+  box-shadow: 0 0 0 1px #666;
+  
+}
+
+th, td {
+  padding: 5px;
+  min-width: 150px;
+  text-align: center;
+}
+
+.todo, .done {
+  margin-bottom: 50px;
+}
+
+
+
+td {
+  border: 1px solid #ccc;
+}

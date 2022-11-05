@@ -3,7 +3,7 @@ function RadioGroup({ className, label, radioAttributes, onChange }) {
     <div className={className}>
       <label>{label}</label>
       {radioAttributes.map((radio) => (
-        <div>
+        <div key={radio.label}>
           <label htmlFor={radio.value}>{radio.label}</label>
           <input
             label={radio.label}

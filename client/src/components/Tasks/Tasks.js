@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import restService from "../../services/RestService";
-import "./Tasklist.css";
+import Tasktable from "../Tasktable";
+import "./Tasks.css";
 
 function Tasklist({ newTask }) {
   const [tasks, setTasks] = useState([]);
@@ -60,46 +61,26 @@ function Tasklist({ newTask }) {
   };
 
   return (
-    <div id="container">
-      <table>
-        <tbody>
-          <tr>
-            <th>Name</th>
-            <th>Type</th>
-            <th>Created at</th>
-            <th>Deadline</th>
-          </tr>
-          {filterUndoneTasks().map((task) => (
-            <tr key={task.id}>
-              <td>{task.name}</td>
-              <td>{task.type}</td>
-              <td>{task.created_at}</td>
-              <td>{task.deadline}</td>
-              <td>
-                <input
-                  type="checkbox"
-                  onChange={() => handleTaskDone(task.id)}
-                />
-              </td>
-              <td>
-                <button
-                  type="button"
-                  onClick={() => handleTaskDeleted(task.id)}
-                >
-                  Delete
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      <h3>Done tasks</h3>
-      <ul>
-        {filterDoneTasks().map((task) => (
-          <li key={task.id}>{task.name}</li>
-        ))}
-      </ul>
-    </div>
+    <>
+      <Tasktable
+        className="todo"
+        tableHeader={"To do"}
+        columnHeaders={["Name", "Type", "Created at", "Deadline"]}
+        rowContent={filterUndoneTasks()}
+        showDoneButton={true}
+        handleTaskDone={handleTaskDone}
+        handleTaskDeleted={handleTaskDeleted}
+        
+      />
+      <Tasktable
+        className="done"
+        tableHeader={"Done tasks"}
+        columnHeaders={["Name", "Type", "Created at", "Deadline"]}
+        rowContent={filterDoneTasks()}
+        handleTaskDeleted={handleTaskDeleted}
+        showDoneButton={false}
+      />
+    </>
   );
 }
 
