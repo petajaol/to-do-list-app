@@ -16,6 +16,12 @@ th, td {
   margin-bottom: 50px;
 }
 
+button {
+  border-radius: 20px;
+  font-weight: bold;
+  height: 30px;
+  margin: 0 5px;
+}
 
 
 td {

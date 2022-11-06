@@ -33,6 +33,7 @@
   display: inline-block;
   border-radius: 20px;
   line-height: 30px;
+  font-size: 16px;
   text-align: center;
   width: 150px;
 }

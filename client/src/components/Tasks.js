@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import restService from "../../services/RestService";
-import Tasktable from "../Tasktable";
+import restService from "../services/RestService";
+import Tasktable from "./Tasktable";
 import "./Tasks.css";
 
 function Tasklist({ newTask }) {
@@ -20,19 +20,17 @@ function Tasklist({ newTask }) {
     // eslint-disable-next-line
   }, [newTask]);
 
-  const applyUpdateToTasks = (updatedTask) => {
+  function applyUpdateToTasks(updatedTask) {
     return tasks.map((task) =>
       task.id === updatedTask.id ? { ...updatedTask } : task
     );
   };
 
-  const deleteFromTasks = (id) => {
+  function deleteFromTasks(id) {
     return tasks.filter((task) => task.id !== id);
   };
 
-  const handleUpdateTask = (task) => {};
-
-  const handleTaskDone = (id) => {
+  function handleTaskDone(id) {
     (async () => {
       const response = await restService.update(id, { done: 1 });
       if (response.status === 200) {
@@ -42,7 +40,7 @@ function Tasklist({ newTask }) {
     })();
   };
 
-  const handleTaskDeleted = (id) => {
+  function handleTaskDeleted(id) {
     (async () => {
       const response = await restService.delete(id);
       if (response.status === 200) {
@@ -52,11 +50,11 @@ function Tasklist({ newTask }) {
     })();
   };
 
-  const filterUndoneTasks = () => {
+  function filterUndoneTasks() {
     return tasks.filter((task) => task.done === 0);
   };
 
-  const filterDoneTasks = () => {
+  function filterDoneTasks() {
     return tasks.filter((task) => task.done === 1);
   };
 

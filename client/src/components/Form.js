@@ -1,8 +1,8 @@
 import { useState } from "react";
-import restService from "../../services/RestService";
+import restService from "../services/RestService";
 import "./Form.css";
-import TextInputWithLabel from "../TextInputWithLabel";
-import RadioGroup from "../RadioGroup";
+import TextInputWithLabel from "./TextInputWithLabel";
+import RadioGroup from "./RadioGroup";
 import DatePickerWithLabel from "./DatePickerWithLabel";
 
 function Form({ setPostResponse }) {
@@ -14,11 +14,15 @@ function Form({ setPostResponse }) {
 
   const [formInputs, setFormInputs] = useState(emptyForm);
 
-  const clearFormInputs = () => {
+  function clearFormInputs() {
     setFormInputs(emptyForm);
   };
 
-  const handleSubmit = (event) => {
+  function validateFormInputs() {
+    
+  }  
+
+  function handleSubmit(event) {
     (async () => {
       const response = await restService.post(formInputs);
       setPostResponse(response.data);
