@@ -1,7 +1,7 @@
 import { useState } from "react";
 import restService from "../services/RestService";
 import "./Form.css";
-import TextInputWithLabel from "./TextInputWithLabel";
+import TextInput from "./TextInput";
 import RadioGroup from "./RadioGroup";
 import DatePickerWithLabel from "./DatePickerWithLabel";
 
@@ -16,28 +16,35 @@ function Form({ setPostResponse }) {
 
   function clearFormInputs() {
     setFormInputs(emptyForm);
-  };
+  }
 
   function validateFormInputs() {
-    
-  }  
+    if (!formInputs.name) {
+      alert("Task name is required!");
+      return false;
+    }
+    return true;
+  }
 
   function handleSubmit(event) {
+    if (!validateFormInputs()) {
+      return;
+    }
     (async () => {
       const response = await restService.post(formInputs);
-      setPostResponse(response.data);
-      clearFormInputs();
+      if (response.status === 200) {
+        setPostResponse(response.data);
+        clearFormInputs();
+      }
     })();
     event.preventDefault();
-  };
+  }
 
   return (
     <form id="form" onSubmit={handleSubmit}>
-      <TextInputWithLabel
+      <TextInput
         className="new-task-input"
         label="Add a new task:"
-        id="name"
-        name="name"
         value={formInputs.name}
         onChange={(event) =>
           setFormInputs({ ...formInputs, name: event.target.value })

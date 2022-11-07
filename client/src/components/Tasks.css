@@ -12,6 +12,10 @@ th, td {
   text-align: center;
 }
 
+td {
+  border: 1px solid #ccc;
+}
+
 .todo, .done {
   margin-bottom: 50px;
 }
@@ -23,7 +27,20 @@ button {
   margin: 0 5px;
 }
 
+#filter {
+  margin-bottom: 20px;
+}
 
-td {
-  border: 1px solid #ccc;
+#filter label, .todo label, .done label {
+  display: block;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+#filter select {
+  width: 180px;
+  text-align: center;
+  border-radius: 20px;
+  height: 30px;
+  font-size: 15px;
 }

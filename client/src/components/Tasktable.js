@@ -9,7 +9,7 @@ function Tasktable({
 }) {
   return (
     <div className={className}>
-      <h3>{tableHeader}</h3>
+      <label>{tableHeader}</label>
       <table>
         <tbody>
           <tr>

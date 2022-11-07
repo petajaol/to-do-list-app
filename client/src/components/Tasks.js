@@ -3,10 +3,9 @@ import restService from "../services/RestService";
 import Tasktable from "./Tasktable";
 import "./Tasks.css";
 
-function Tasklist({ newTask }) {
+function Tasks({ newTask }) {
   const [tasks, setTasks] = useState([]);
-
-  //delete and update buttons and logic for singular tasks
+  const [filterOption, setFilterOption] = useState("all");
 
   useEffect(() => {
     (async () => {
@@ -24,11 +23,11 @@ function Tasklist({ newTask }) {
     return tasks.map((task) =>
       task.id === updatedTask.id ? { ...updatedTask } : task
     );
-  };
+  }
 
   function deleteFromTasks(id) {
     return tasks.filter((task) => task.id !== id);
-  };
+  }
 
   function handleTaskDone(id) {
     (async () => {
@@ -38,7 +37,7 @@ function Tasklist({ newTask }) {
         setTasks(tasksWithUpdate);
       }
     })();
-  };
+  }
 
   function handleTaskDeleted(id) {
     (async () => {
@@ -48,27 +47,42 @@ function Tasklist({ newTask }) {
         setTasks(tasksAfterDelete);
       }
     })();
-  };
+  }
 
-  function filterUndoneTasks() {
-    return tasks.filter((task) => task.done === 0);
-  };
+  function filterUndoneTasksWithSelect() {
+    const undoneTasks = tasks.filter((task) => task.done === 0);
+    if (filterOption === "all") {
+      return undoneTasks;
+    } else {
+      return undoneTasks.filter((task) => filterOption === task.type);
+    }
+  }
 
   function filterDoneTasks() {
     return tasks.filter((task) => task.done === 1);
-  };
+  }
 
   return (
     <>
+      <div id="filter">
+        <label>Filter tasks by type</label>
+        <select onChange={(event) => setFilterOption(event.target.value)}>
+          <option value="all" defaultValue={"all"}>
+            All
+          </option>
+          <option value="home">Home</option>
+          <option value="school">School</option>
+          <option value="work">Work</option>
+        </select>
+      </div>
       <Tasktable
         className="todo"
         tableHeader={"To do"}
         columnHeaders={["Name", "Type", "Created at", "Deadline"]}
-        rowContent={filterUndoneTasks()}
+        rowContent={filterUndoneTasksWithSelect()}
         showDoneButton={true}
         handleTaskDone={handleTaskDone}
         handleTaskDeleted={handleTaskDeleted}
-        
       />
       <Tasktable
         className="done"
@@ -82,4 +96,4 @@ function Tasklist({ newTask }) {
   );
 }
 
-export default Tasklist;
+export default Tasks;
