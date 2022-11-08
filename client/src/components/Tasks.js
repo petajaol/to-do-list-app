@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import restService from "../services/RestService";
 import Tasktable from "./Tasktable";
 import "./Tasks.css";
+import FilterSelector from "./FilterSelector";
 
 function Tasks({ newTask }) {
   const [tasks, setTasks] = useState([]);
@@ -64,17 +65,17 @@ function Tasks({ newTask }) {
 
   return (
     <>
-      <div id="filter">
-        <label>Filter tasks by type</label>
-        <select onChange={(event) => setFilterOption(event.target.value)}>
-          <option value="all" defaultValue={"all"}>
-            All
-          </option>
-          <option value="home">Home</option>
-          <option value="school">School</option>
-          <option value="work">Work</option>
-        </select>
-      </div>
+      <FilterSelector
+        className={"filter"}
+        label={"Filter tasks by type"}
+        onChange={(event) => setFilterOption(event.target.value)}
+        options={[
+          { value: "all", name: "All" },
+          { value: "home", name: "Home" },
+          { value: "school", name: "School" },
+          { value: "work", name: "Work" },
+        ]}
+      />
       <Tasktable
         className="todo"
         tableHeader={"To do"}

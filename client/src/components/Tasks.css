@@ -27,17 +27,17 @@ button {
   margin: 0 5px;
 }
 
-#filter {
+.filter {
   margin-bottom: 20px;
 }
 
-#filter label, .todo label, .done label {
+.filter label, .todo label, .done label {
   display: block;
   font-weight: bold;
   font-size: 20px;
 }
 
-#filter select {
+.filter select {
   width: 180px;
   text-align: center;
   border-radius: 20px;

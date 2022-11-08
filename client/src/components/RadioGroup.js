@@ -1,4 +1,11 @@
-function RadioGroup({ className, label, radioAttributes, onChange }) {
+function RadioGroup({
+  className,
+  label,
+  radioAttributes,
+  onChange,
+  checked,
+  setChecked,
+}) {
   return (
     <div className={className}>
       <label>{label}</label>
@@ -12,6 +19,8 @@ function RadioGroup({ className, label, radioAttributes, onChange }) {
             name="type"
             value={radio.value}
             onChange={onChange}
+            onClick={() => setChecked(radio.value)}
+            checked={checked === radio.value}
           />
         </div>
       ))}

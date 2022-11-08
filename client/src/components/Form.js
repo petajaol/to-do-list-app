@@ -13,6 +13,7 @@ function Form({ setPostResponse }) {
   };
 
   const [formInputs, setFormInputs] = useState(emptyForm);
+  const [checkedRadio, setCheckedRadio] = useState("");
 
   function clearFormInputs() {
     setFormInputs(emptyForm);
@@ -37,6 +38,7 @@ function Form({ setPostResponse }) {
         clearFormInputs();
       }
     })();
+    setCheckedRadio("");
     event.preventDefault();
   }
 
@@ -58,6 +60,8 @@ function Form({ setPostResponse }) {
           { label: "School", value: "school" },
           { label: "Work", value: "work" },
         ]}
+        checked={checkedRadio}
+        setChecked={setCheckedRadio}
         onChange={(event) =>
           setFormInputs({ ...formInputs, type: event.target.value })
         }
