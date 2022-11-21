@@ -3,7 +3,7 @@
 #### To install and run the backend do the following:
 Navigate to the api-folder with `cd api`
 
-Then install dependencies `npm install`
+Then install dependencies `npm install`<br>
 If you encounter problems with installing better-sqlite3 package (problems related to node-gyp), try using Node 16 (LTS) as there are prebuild binaries available.
 
 Lastly run the server with `node index.js`
